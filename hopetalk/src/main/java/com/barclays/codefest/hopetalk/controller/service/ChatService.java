@@ -3,6 +3,7 @@ package com.barclays.codefest.hopetalk.controller.service;
 import com.barclays.codefest.hopetalk.HopetalkApplication;
 import com.barclays.codefest.hopetalk.repository.ChatRepository;
 import com.barclays.codefest.hopetalk.repository.model.ChatSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -12,6 +13,7 @@ import java.time.Instant;
 
 @Service
 public class ChatService {
+    @Autowired
     private ChatRepository chatRepository;
 
     public ChatService(ChatRepository chatRepository) {
@@ -30,7 +32,7 @@ public class ChatService {
         anotherChat.setStartTime(timestamp);
         anotherChat.setSenderId(senderId);
         anotherChat.setMessage(message);
-        chatRepository.save(chatSession);
+        chatRepository.saveAndFlush(anotherChat);
     }
 
     public int startChat(int therapistId, int clientId) {
